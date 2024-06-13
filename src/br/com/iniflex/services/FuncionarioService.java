@@ -14,7 +14,7 @@ public class FuncionarioService {
 
     public List<Funcionario> removerFuncionario(List<Funcionario> funcionarios, String nome) {
         return funcionarios.stream()
-                .filter(funcionario -> !funcionario.getNome().equals(nome))
+                .filter(funcionario -> !funcionario.getNome().equalsIgnoreCase(nome))
                 .collect(Collectors.toList());
     }
 
@@ -33,7 +33,9 @@ public class FuncionarioService {
     public List<Funcionario> aumentarSalario(List<Funcionario> funcionarios, BigDecimal percentual) {
         return funcionarios.stream()
                 .map(funcionario -> {
-                    BigDecimal novoSalario = funcionario.getSalario().multiply(BigDecimal.ONE.add(percentual));
+                    BigDecimal novoSalario = funcionario.getSalario()
+                            .multiply(BigDecimal.ONE.add(percentual))
+                            .setScale(2, BigDecimal.ROUND_HALF_UP);
                     funcionario.setSalario(novoSalario);
                     return funcionario;
                 })
@@ -67,17 +69,17 @@ public class FuncionarioService {
         System.out.println(String.format("Nome: %s, Idade: %d", maisVelho.getNome(), idade));
     }
 
-    public void imprimirOrdemAlfabetica(List<Funcionario> funcionarios) {
-        funcionarios.stream()
+    public List<Funcionario> ordenarFuncionariosPorNome(List<Funcionario> funcionarios) {
+        return funcionarios.stream()
                 .sorted(Comparator.comparing(Funcionario::getNome))
-                .forEach(funcionario -> System.out.println(formatarFuncionario(funcionario)));
+                .collect(Collectors.toList());
+
     }
 
-    public void imprimirTotalSalarios(List<Funcionario> funcionarios) {
-        BigDecimal totalSalarios = funcionarios.stream()
+    public BigDecimal imprimirTotalSalarios(List<Funcionario> funcionarios) {
+        return funcionarios.stream()
                 .map(Funcionario::getSalario)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        System.out.println("Total dos Salários: " + NumberUtils.formatarNumero(totalSalarios));
     }
 
     public void imprimirSalariosMinimos(List<Funcionario> funcionarios, BigDecimal salarioMinimo) {
@@ -86,5 +88,11 @@ public class FuncionarioService {
             System.out.println(String.format("Nome: %s, Salários Mínimos: %s",
                     funcionario.getNome(), NumberUtils.formatarNumero(salariosMinimos)));
         });
+    }
+
+    public BigDecimal calcularTotalSalarios(List<Funcionario> funcionarios) {
+        return funcionarios.stream()
+                .map(Funcionario::getSalario)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

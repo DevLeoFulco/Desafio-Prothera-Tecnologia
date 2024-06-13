@@ -1,4 +1,4 @@
-package com.br.iniflex;
+package br.com.iniflex.principal;
 
 import br.com.iniflex.model.Funcionario;
 import br.com.iniflex.services.FuncionarioService;
@@ -38,7 +38,7 @@ public class Main {
 
 
         // 3.3 Imprimir todos os funcionários
-        //funcionarioService.imprimirFuncionarios(funcionarios);
+        funcionarioService.imprimirFuncionarios(funcionarios);
 
 
 
@@ -48,27 +48,27 @@ public class Main {
 
 
         // 3.5 Agrupar por função
-        //Map<String, List<Funcionario>> funcionariosPorFuncao = funcionarioService.agruparPorFuncao(funcionarios);
+        Map<String, List<Funcionario>> funcionariosPorFuncao = funcionarioService.agruparPorFuncao(funcionarios);
 
 
 
         // 3.6 Imprimir agrupados por função
-        //funcionarioService.imprimirPorFuncao(funcionariosPorFuncao);
+        funcionarioService.imprimirPorFuncao(funcionariosPorFuncao);
 
 
 
         // 3.8 Imprimir aniversariantes dos meses 10 e 12
-        //funcionarioService.imprimirAniversariantes(funcionarios, 10, 12);
+        funcionarioService.imprimirAniversariantes(funcionarios, 10, 12);
 
 
 
         // 3.9 Imprimir funcionário com maior idade
-        //funcionarioService.imprimirFuncionarioMaisVelho(funcionarios);
+        funcionarioService.imprimirFuncionarioMaisVelho(funcionarios);
 
 
 
         // 3.10 Imprimir por ordem alfabética
-        funcionarioService.imprimirOrdemAlfabetica(funcionarios);
+        funcionarioService.ordenarFuncionariosPorNome(funcionarios);
 
 
 
